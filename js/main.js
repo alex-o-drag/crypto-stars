@@ -1,4 +1,4 @@
-import {printUsersOnTable, addTabsControlListenerClick, addVerifiedUsersChangeListener} from './table.js';
+import {printUsersOnTable, addTabsControlListenerClick, addVerifiedUsersChangeListener} from './users-info/table.js';
 
 printUsersOnTable();
 addTabsControlListenerClick();

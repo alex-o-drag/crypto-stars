@@ -1,4 +1,4 @@
-import {getUsers} from './api/api.js';
+import {getUsers} from '../api/api.js';
 
 const userRowTemplate = document.querySelector('#user-table-row__template').content.querySelector('.users-list__table-row');
 const usersTableBody = document.querySelector('.users-list__table-body');

@@ -1,1 +1,3 @@
-console.log('Привет, мир!');
+import {printUsersOnTable} from './table.js';
+
+printUsersOnTable();

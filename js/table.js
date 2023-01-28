@@ -5,9 +5,7 @@ const usersTableBody = document.querySelector('.users-list__table-body');
 const tabsControl = document.querySelector('.tabs__controls');
 const isVerifiedCheckedInput = document.querySelector('#checked-users');
 
-const getUsersSelectedType = () => {
-  return tabsControl.querySelector('.tabs__control.is-active').dataset.value;
-};
+const getUsersSelectedType = () => tabsControl.querySelector('.tabs__control.is-active').dataset.value;
 
 const checkUser = (user) => {
   if(user.status === getUsersSelectedType() && (!isVerifiedCheckedInput.checked || user.isVerified)) {
@@ -23,11 +21,15 @@ const printUsersOnTable = () => {
   getUsers((users) => {
     users.filter((user) => checkUser(user)).forEach((user) => {
       const userToAdd = userRowTemplate.cloneNode(true);
+      let maxAmount;
       userToAdd.querySelector('.users-list__table-name span').textContent = user.userName;
+      userToAdd.querySelector('.users-list__table-currency').textContent = user.balance.currency;
+      userToAdd.querySelector('.users-list__table-exchangerate').textContent = `${user.exchangeRate}\xA0₽`;
+
       if(!user.isVerified) {
         userToAdd.querySelector('.users-list__table-name svg').remove();
       }
-      if(user.status !== 'seller') {
+      if(user.status === 'buyer') {
         userToAdd.querySelector('.users-list__badges-list').remove();
       } else if(user.paymentMethods.length) {
         const paymentMethodTemplate = userToAdd.querySelector('.users-list__badges-item');
@@ -38,8 +40,13 @@ const printUsersOnTable = () => {
           paymentMethod.textContent = method.provider;
           userToAdd.querySelector('.users-list__badges-list').appendChild(paymentMethod);
         });
-
       }
+      if(user.status === 'seller') {
+        maxAmount = user.exchangeRate * user.balance.amount;
+      } else {
+        maxAmount = user.balance.amount;
+      }
+      userToAdd.querySelector('.users-list__table-cashlimit').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${maxAmount}\xA0₽`;
       usersTableBody.appendChild(userToAdd);
     });
   }, () => {

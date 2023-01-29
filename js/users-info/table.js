@@ -1,5 +1,6 @@
 import {getUsers} from '../api/api.js';
 import {addSellerToMap, deleteMarkers} from './map.js';
+import {showModal} from '../modals/modal.js';
 
 const userRowTemplate = document.querySelector('#user-table-row__template').content.querySelector('.users-list__table-row');
 const usersTableBody = document.querySelector('.users-list__table-body');
@@ -52,6 +53,11 @@ const printUsersOnTable = () => {
         maxAmount = user.balance.amount;
       }
       userToAdd.querySelector('.users-list__table-cashlimit').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${maxAmount}\xA0₽`;
+
+      userToAdd.querySelector('.users-list__table-btn .btn').addEventListener('click', () => {
+        showModal(user);
+      });
+
       usersTableBody.appendChild(userToAdd);
     });
 

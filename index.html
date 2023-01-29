@@ -312,25 +312,31 @@
                     <input type="hidden" name="receivingCurrency">
 
                     <div class="transaction-info">
-                        <p class="transaction-info__item transaction-info__item--name"><span
-                                class="transaction-info__label">Пользователь</span><span class="transaction-info__data">
-                                <svg width="20" height="20" aria-hidden="true">
-                                    <use xlink:href="#icon-star"></use>
-                                </svg>John Smith</span></p>
-                        <p class="transaction-info__item transaction-info__item--exchangerate"><span
-                                class="transaction-info__label">Курс</span><span class="transaction-info__data">9 999
-                                999&nbsp;₽</span></p>
-                        <p class="transaction-info__item transaction-info__item--cashlimit"><span
-                                class="transaction-info__label">Лимит</span><span class="transaction-info__data">9 999
-                                999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</span></p>
+                        <p class="transaction-info__item transaction-info__item--name">
+                          <span class="transaction-info__label">
+                            Пользователь
+                          </span>
+                          <span class="transaction-info__data">
+                            <svg width="20" height="20" aria-hidden="true"><use xlink:href="#icon-star"></use></svg>
+                            <span data-name>John Smith</span>
+                          </span>
+                        </p>
+                        <p class="transaction-info__item transaction-info__item--exchangerate">
+                          <span class="transaction-info__label">Курс</span>
+                          <span data-exchangerate class="transaction-info__data">9 999999&nbsp;₽</span>
+                        </p>
+                        <p class="transaction-info__item transaction-info__item--cashlimit">
+                          <span class="transaction-info__label">Лимит</span>
+                          <span data-cashlimit class="transaction-info__data">9 999 999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</span>
+                        </p>
                     </div>
                     <div class="modal__container modal__container--small">
                         <div class="modal__input-wrapper modal__input-wrapper--min">
                             <div class="custom-input">
-                                <label><span class="custom-input__label">Оплата</span><span
-                                        class="custom-input__unit">₽</span>
-                                    <button class="btn btn--textblue custom-input__btn" type="button">обменять все
-                                    </button>
+                                <label>
+                                  <span class="custom-input__label">Оплата</span>
+                                  <span class="custom-input__unit">₽</span>
+                                    <button class="btn btn--textblue custom-input__btn" type="button">обменять все</button>
                                     <input type="number" value="" placeholder="0">
                                 </label>
                                 <!-- Пример стилизации ошибки валидации -->
@@ -342,9 +348,10 @@
                         </svg>
                         <div class="modal__input-wrapper modal__input-wrapper--min">
                             <div class="custom-input">
-                                <label><span class="custom-input__label">Зачисление</span><span
-                                        class="custom-input__unit">KEKS</span>
-                                    <input type="number" placeholder="0">
+                                <label>
+                                  <span class="custom-input__label">Зачисление</span>
+                                  <span class="custom-input__unit">KEKS</span>
+                                  <input type="number" placeholder="0">
                                 </label>
                             </div>
                         </div>

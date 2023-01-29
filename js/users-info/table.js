@@ -1,4 +1,5 @@
 import {getUsers} from '../api/api.js';
+import {addSellerToMap, deleteMarkers} from './map.js';
 
 const userRowTemplate = document.querySelector('#user-table-row__template').content.querySelector('.users-list__table-row');
 const usersTableBody = document.querySelector('.users-list__table-body');
@@ -18,6 +19,7 @@ const clearTable = () => {
 };
 
 const printUsersOnTable = () => {
+  deleteMarkers();
   getUsers((users) => {
     users.filter((user) => checkUser(user)).forEach((user) => {
       const userToAdd = userRowTemplate.cloneNode(true);
@@ -43,12 +45,16 @@ const printUsersOnTable = () => {
       }
       if(user.status === 'seller') {
         maxAmount = user.exchangeRate * user.balance.amount;
+        if(user.coords) {
+          addSellerToMap(user);
+        }
       } else {
         maxAmount = user.balance.amount;
       }
       userToAdd.querySelector('.users-list__table-cashlimit').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${maxAmount}\xA0₽`;
       usersTableBody.appendChild(userToAdd);
     });
+
   }, () => {
     /*onDataError();*/
   });
@@ -76,7 +82,6 @@ const changeVerifyValue = () => {
   clearTable();
   printUsersOnTable();
 };
-
 
 const addVerifiedUsersChangeListener = () => {
   isVerifiedCheckedInput.addEventListener('change', () => {

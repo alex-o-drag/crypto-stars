@@ -2154,3 +2154,8 @@ button,
     background-color: #eefaf9;
   }
 }
+
+.hidden {
+  height: 0;
+  overflow: hidden;
+}

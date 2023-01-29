@@ -6,11 +6,11 @@ const changeInfoBlock = (evt) => {
   currentActiveTab.classList.remove('is-active');
   newActiveTab.classList.add('is-active');
 
-  const currentActiveBlock = document.querySelector('.users-toggle-block:not(.visually-hidden)');
-  const newActiveBlock = document.querySelector('.users-toggle-block.visually-hidden');
+  const currentActiveBlock = document.querySelector('.users-toggle-block:not(.hidden)');
+  const newActiveBlock = document.querySelector('.users-toggle-block.hidden');
 
-  currentActiveBlock.classList.add('visually-hidden');
-  newActiveBlock.classList.remove('visually-hidden');
+  currentActiveBlock.classList.add('hidden');
+  newActiveBlock.classList.remove('hidden');
 };
 
 const addChangeInfoBlockClickListener = () => {

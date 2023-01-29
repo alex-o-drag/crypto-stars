@@ -11,19 +11,6 @@ const initMap = () => {
     maxZoom: DEFAULT_ZOOM,
     attribution: '<a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> | Crypto Stars by <a href="https://htmlacademy.ru/" target="_blank">HTML Academy</a>'
   }).addTo(mapAndFilters);
-
-
-  const marker = L.marker(
-    {
-      lat: DEFAULT_COORDINATES.lat,
-      lng: DEFAULT_COORDINATES.lng
-    },
-    {
-      draggable: false,
-    }
-  );
-
-  marker.addTo(mapAndFilters);
 };
 
 const createBalloonContent = (user) => {

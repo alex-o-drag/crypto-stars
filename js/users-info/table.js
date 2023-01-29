@@ -3,7 +3,7 @@ import {addSellerToMap, deleteMarkers} from './map.js';
 
 const userRowTemplate = document.querySelector('#user-table-row__template').content.querySelector('.users-list__table-row');
 const usersTableBody = document.querySelector('.users-list__table-body');
-const tabsControl = document.querySelector('.tabs__controls');
+const tabsControl = document.querySelector('.users-type-tabs');
 const isVerifiedCheckedInput = document.querySelector('#checked-users');
 
 const getUsersSelectedType = () => tabsControl.querySelector('.tabs__control.is-active').dataset.value;
@@ -70,7 +70,7 @@ const changeUsersType = (evt) => {
   printUsersOnTable();
 };
 
-const addTabsControlListenerClick = () => {
+const addTabsControlClickListener = () => {
   tabsControl.addEventListener('click', (evt) => {
     if(evt.target.classList.contains('tabs__control') && !evt.target.classList.contains('is-active')){
       changeUsersType(evt);
@@ -89,4 +89,4 @@ const addVerifiedUsersChangeListener = () => {
   });
 };
 
-export {printUsersOnTable, addTabsControlListenerClick, addVerifiedUsersChangeListener};
+export {printUsersOnTable, addTabsControlClickListener, addVerifiedUsersChangeListener};

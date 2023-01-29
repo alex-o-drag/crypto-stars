@@ -1,7 +1,9 @@
-import {printUsersOnTable, addTabsControlListenerClick, addVerifiedUsersChangeListener} from './users-info/table.js';
+import {printUsersOnTable, addTabsControlClickListener, addVerifiedUsersChangeListener} from './users-info/table.js';
 import {initMap} from './users-info/map.js';
+import {addChangeInfoBlockClickListener} from './users-info/info-switcher.js';
 
 printUsersOnTable();
-addTabsControlListenerClick();
+addTabsControlClickListener();
 addVerifiedUsersChangeListener();
 initMap();
+addChangeInfoBlockClickListener();

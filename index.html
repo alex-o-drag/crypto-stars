@@ -317,7 +317,7 @@
                             Пользователь
                           </span>
                           <span class="transaction-info__data">
-                            <svg width="20" height="20" aria-hidden="true"><use xlink:href="#icon-star"></use></svg>
+                            <svg data-isverified width="20" height="20" aria-hidden="true"><use xlink:href="#icon-star"></use></svg>
                             <span data-name>John Smith</span>
                           </span>
                         </p>
@@ -337,7 +337,7 @@
                                   <span class="custom-input__label">Оплата</span>
                                   <span class="custom-input__unit">₽</span>
                                     <button class="btn btn--textblue custom-input__btn" type="button">обменять все</button>
-                                    <input type="number" value="" placeholder="0">
+                                    <input type="number" value="" placeholder="0" data-rubinput>
                                 </label>
                                 <!-- Пример стилизации ошибки валидации -->
                                 <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
@@ -364,20 +364,17 @@
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select>
+                                <select data-paymentmetods>
                                     <option selected disabled>Выберите платёжную систему</option>
-                                    <option>CryptoEx</option>
-                                    <option>Первый криптобанк</option>
-                                    <option>BitTransfer</option>
-                                    <option>BMT Exchange</option>
                                 </select>
                             </div>
                         </div>
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
-                                <label><span class="custom-input__label">Номер банковской карты пользователя</span>
-                                    <input type="number" placeholder="1234 5678 9012 3456" disabled>
+                                <label>
+                                  <span class="custom-input__label">Номер банковской карты пользователя</span>
+                                    <input type="text" placeholder="" data-bankcardinput disabled>
                                 </label>
                             </div>
                         </div>
@@ -391,7 +388,7 @@
                         <div class="modal__input-wrapper modal__input-wrapper--decorated">
                             <div class="custom-input">
                                 <label><span class="custom-input__label">Платёжный пароль</span>
-                                    <input type="password" value="123456" placeholder="Введите пароль">
+                                    <input type="password" value="" placeholder="Введите пароль">
                                 </label>
                             </div>
                         </div>
@@ -508,7 +505,7 @@
                                     которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                                     остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                                 -->
-                                <select>
+                                <select data-paymentmetods>
                                     <option selected disabled>Выберите платёжную систему</option>
                                     <option>CryptoEx</option>
                                     <option>Первый криптобанк</option>
@@ -521,7 +518,7 @@
                             <div class="custom-input">
                                 <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
                                 <label><span class="custom-input__label">Номер банковской карты пользователя</span>
-                                    <input type="number" placeholder="1234 5678 9012 3456" disabled>
+                                    <input type="number" value="" disabled data-bankcardinput>
                                 </label>
                             </div>
                         </div>

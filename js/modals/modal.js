@@ -35,9 +35,24 @@ const showModal = (user) => {
   closeModalBtn.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onEscKeydown);
 
- /* currentModal.querySelector('[data-name]').textContent = user.userName;
-  currentModal.querySelector('[data-exchangerate]').textContent = user.exchangeRate;
-  currentModal.querySelector('[data-cashlimit]').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${user.exchangeRate * user.balance.amount}\xA0₽`;*/
+  if(user.status === 'seller') {
+    currentModal.querySelector('[data-name]').textContent = user.userName;
+    currentModal.querySelector('[data-exchangerate]').textContent = user.exchangeRate;
+    currentModal.querySelector('[data-cashlimit]').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${user.exchangeRate * user.balance.amount}\xA0₽`;
+    currentModal.querySelector('[data-rubinput]').setAttribute('placeholder', user.minAmount);
+
+    const paymentMethodSelect = currentModal.querySelector('[data-paymentmetods]');
+    user.paymentMethods.forEach((method) => {
+      const newOption = document.createElement('option');
+      newOption.textContent = method.provider;
+      newOption.setAttribute('value', method.accountNumber || '');
+      paymentMethodSelect.appendChild(newOption);
+    });
+
+    paymentMethodSelect.addEventListener('change', (evt) => {
+      currentModal.querySelector('[data-bankcardinput]').setAttribute('value', evt.target.value);
+    });
+  }
 
   currentModal.style.display = 'block';
 };

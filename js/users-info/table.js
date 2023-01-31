@@ -6,6 +6,8 @@ const userRowTemplate = document.querySelector('#user-table-row__template').cont
 const usersTableBody = document.querySelector('.users-list__table-body');
 const tabsControl = document.querySelector('.users-type-tabs');
 const isVerifiedCheckedInput = document.querySelector('#checked-users');
+const uiContainers = document.querySelectorAll('.ui-info');
+const serverErrorContainer = document.querySelector('.no-response-message-block');
 
 const getUsersSelectedType = () => tabsControl.querySelector('.tabs__control.is-active').dataset.value;
 
@@ -17,6 +19,14 @@ const checkUser = (user) => {
 
 const clearTable = () => {
   usersTableBody.innerHTML = '';
+};
+
+const showServerError = () => {
+  uiContainers.forEach((container) => {
+    container.style.display = 'none';
+  });
+
+  serverErrorContainer.style.display = 'block';
 };
 
 const printUsersOnTable = () => {
@@ -62,7 +72,7 @@ const printUsersOnTable = () => {
     });
 
   }, () => {
-    /*onDataError();*/
+    showServerError();
   });
 };
 

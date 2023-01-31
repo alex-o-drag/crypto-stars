@@ -1,14 +1,14 @@
 import {isEscape} from '../common/utils.js';
+import {setModalInfo} from './trading.js';
 
-const modalBuy = document.querySelector('.modal--buy');
-const modalSell = document.querySelector('.modal--sell');
+const modalBuy = document.querySelector('#modal-buy').content.querySelector('.modal');
+const modalSell = document.querySelector('#modal-sell').content.querySelector('.modal');
 const body = document.querySelector('body');
 
 const closeModal = () => {
-  const modal = document.querySelector('.modal.modal-active');
-  modal.style.display = 'none';
+  const modal = document.querySelector('.modal');
   body.classList.remove('scroll-lock');
-  modal.classList.remove('modal-active');
+  modal.remove();
 };
 
 const onEscKeydown = (evt) => {
@@ -18,43 +18,25 @@ const onEscKeydown = (evt) => {
   }
 };
 
-const onCloseBtnClick = () => {
-  const closeModalBtn = document.querySelector('.modal.modal-active .close-btn');
-  closeModalBtn.removeEventListener('click', onCloseBtnClick);
-  document.removeEventListener('keydown', onEscKeydown);
+const onModalElementClick = () => {
+  document.removeEventListener('keydown', onEscKeydown, body);
   closeModal();
 };
 
 const showModal = (user) => {
-  const currentModal = user.status === 'seller' ? modalBuy : modalSell;
+  const currentModal = user.status === 'seller' ? modalBuy.cloneNode(true) : modalSell.cloneNode(true);
+
   const closeModalBtn = currentModal.querySelector('.close-btn');
+  const closeModalOverlay = currentModal.querySelector('.modal__overlay');
 
-  currentModal.classList.add('modal-active');
-  body.classList.add('scroll-lock');
-
-  closeModalBtn.addEventListener('click', onCloseBtnClick);
+  closeModalBtn.addEventListener('click', onModalElementClick);
+  closeModalOverlay.addEventListener('click', onModalElementClick);
   document.addEventListener('keydown', onEscKeydown);
 
-  if(user.status === 'seller') {
-    currentModal.querySelector('[data-name]').textContent = user.userName;
-    currentModal.querySelector('[data-exchangerate]').textContent = user.exchangeRate;
-    currentModal.querySelector('[data-cashlimit]').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${user.exchangeRate * user.balance.amount}\xA0₽`;
-    currentModal.querySelector('[data-rubinput]').setAttribute('placeholder', user.minAmount);
+  setModalInfo(user, currentModal);
+  body.classList.add('scroll-lock');
 
-    const paymentMethodSelect = currentModal.querySelector('[data-paymentmetods]');
-    user.paymentMethods.forEach((method) => {
-      const newOption = document.createElement('option');
-      newOption.textContent = method.provider;
-      newOption.setAttribute('value', method.accountNumber || '');
-      paymentMethodSelect.appendChild(newOption);
-    });
-
-    paymentMethodSelect.addEventListener('change', (evt) => {
-      currentModal.querySelector('[data-bankcardinput]').setAttribute('value', evt.target.value);
-    });
-  }
-
-  currentModal.style.display = 'block';
+  body.appendChild(currentModal);
 };
 
 export {showModal};

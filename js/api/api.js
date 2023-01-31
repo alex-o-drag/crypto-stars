@@ -17,4 +17,21 @@ const getUsers = (onSuccess, onError) => {
     });
 };
 
-export {getUsers};
+const getAccountInfo = (onSuccess, onError) => {
+  fetch(`${API_ADDRESS}/user`)
+    .then((response) => {
+      if(response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Ошибка получения данных');
+      }
+    })
+    .then((data) => {
+      onSuccess(data);
+    })
+    .catch((error) => {
+      onError(error.message);
+    });
+};
+
+export {getUsers, getAccountInfo};

@@ -105,4 +105,4 @@ const addVerifiedUsersChangeListener = () => {
   });
 };
 
-export {printUsersOnTable, addTabsControlClickListener, addVerifiedUsersChangeListener};
+export {printUsersOnTable, addTabsControlClickListener, addVerifiedUsersChangeListener, serverErrorContainer, showServerError};

@@ -13,7 +13,7 @@ const getUsers = (onSuccess, onError) => {
       onSuccess(data);
     })
     .catch((error) => {
-      onError(error.message);
+      onError(error);
     });
 };
 
@@ -30,7 +30,7 @@ const getAccountInfo = (onSuccess, onError) => {
       onSuccess(data);
     })
     .catch((error) => {
-      onError(error.message);
+      onError(error);
     });
 };
 

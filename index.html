@@ -301,17 +301,17 @@
           <div class="modal__content">
             <h2 class="modal__description">Покупка криптовалюты</h2>
             <!-- Не забудьте указать верный action-атрибут -->
-            <form class="modal-buy" method="post">
+            <form class="modal-buy" method="post" autocomplete="off">
               <!--
                   Обратите внимание, что всем полям для отправки на сервер нужно указать
                   атрибуты name (их список вы найдёте в техзадании), а часть полей
                   вообще отправляется скрытыми
               -->
               <input type="hidden" name="type" value="BUY">
-              <input type="hidden" name="contractorId">
-              <input type="hidden" name="exchangeRate">
-              <input type="hidden" name="sendingCurrency">
-              <input type="hidden" name="receivingCurrency">
+              <input type="hidden" name="contractorId" data-contractorid>
+              <input type="hidden" name="exchangeRate" data-exchangerateinput>
+              <input type="hidden" name="sendingCurrency" data-sendingcurrency>
+              <input type="hidden" name="receivingCurrency" data-receivingcurrency>
 
               <div class="transaction-info">
                 <p class="transaction-info__item transaction-info__item--name">
@@ -360,13 +360,18 @@
               </div>
               <div class="modal__container">
                 <div class="modal__select-wrapper">
-                  <div class="select"><span>Плaтёжная система</span>
+                  <div class="select">
+                    <span>
+                      <label for="buy-select">
+                        Плaтёжная система
+                      </label>
+                    </span>
                     <!--
                         При отрисовке в списке платёжных систем нужно отразить только те,
                         которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                         остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                     -->
-                    <select data-paymentmetods>
+                    <select id="buy-select" data-paymentmetods>
                       <option selected disabled>Выберите платёжную систему</option>
                     </select>
                   </div>
@@ -444,17 +449,17 @@
           <div class="modal__content">
             <h2 class="modal__description">Продажа криптовалюты</h2>
             <!-- Не забудьте указать верный action-атрибут -->
-            <form class="modal-sell" method="post">
+            <form class="modal-sell" method="post" autocomplete="off">
               <!--
                   Обратите внимание, что всем полям для отправки на сервер нужно указать
                   атрибуты name (их список вы найдёте в техзадании), а часть полей
                   вообще отправляется скрытыми
               -->
               <input type="hidden" name="type" value="SELL">
-              <input type="hidden" name="contractorId">
-              <input type="hidden" name="exchangeRate">
-              <input type="hidden" name="sendingCurrency">
-              <input type="hidden" name="receivingCurrency">
+              <input type="hidden" name="contractorId" data-contractorid>
+              <input type="hidden" name="exchangeRate" data-exchangerateinput>
+              <input type="hidden" name="sendingCurrency" data-sendingcurrency>
+              <input type="hidden" name="receivingCurrency" data-receivingcurrency>
 
               <div class="transaction-info">
                 <p class="transaction-info__item transaction-info__item--name">
@@ -512,13 +517,18 @@
                   </div>
                 </div>
                 <div class="modal__select-wrapper">
-                  <div class="select"><span>Плaтёжная система</span>
+                  <div class="select">
+                    <span>
+                      <label for="sell-select">
+                        Плaтёжная система
+                      </label>
+                    </span>
                     <!--
                         При отрисовке в списке платёжных систем нужно отразить только те,
                         которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                         остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                     -->
-                    <select data-paymentmetods>
+                    <select id="sell-select" data-paymentmetods>
                       <option selected disabled>Выберите платёжную систему</option>
                     </select>
                   </div>
@@ -623,6 +633,7 @@
         </div>
     </template>
 
+    <script src="pristine/pristine.min.js"></script>
     <script src="leaflet/leaflet.js"></script>
     <script src="./js/main.js" type="module"></script>
 

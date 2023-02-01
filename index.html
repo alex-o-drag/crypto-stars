@@ -301,7 +301,7 @@
           <div class="modal__content">
             <h2 class="modal__description">Покупка криптовалюты</h2>
             <!-- Не забудьте указать верный action-атрибут -->
-            <form class="modal-buy" method="post" autocomplete="off">
+            <form class="modal-buy modal-form" method="post" autocomplete="off">
               <!--
                   Обратите внимание, что всем полям для отправки на сервер нужно указать
                   атрибуты name (их список вы найдёте в техзадании), а часть полей
@@ -339,10 +339,16 @@
                       <span class="custom-input__label">Оплата</span>
                       <span class="custom-input__unit">₽</span>
                       <button class="btn btn--textblue custom-input__btn" type="button">обменять все</button>
-                      <input type="number" value="" placeholder="0" data-rubinput>
+                      <input
+                        type="number"
+                        value=""
+                        placeholder="0"
+                        data-rubinput
+                        required
+                        data-pristine-required-message="Необходимо заполнить"
+                      >
                     </label>
                     <!-- Пример стилизации ошибки валидации -->
-                    <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
                   </div>
                 </div>
                 <svg class="modal__container-svg" width="14" height="12" aria-hidden="true">
@@ -353,7 +359,13 @@
                     <label>
                       <span class="custom-input__label">Зачисление</span>
                       <span class="custom-input__unit">KEKS</span>
-                      <input type="number" placeholder="0">
+                      <input
+                        type="number"
+                        placeholder="0"
+                        data-keksinput
+                        required
+                        data-pristine-required-message="Необходимо заполнить"
+                      >
                     </label>
                   </div>
                 </div>
@@ -449,7 +461,7 @@
           <div class="modal__content">
             <h2 class="modal__description">Продажа криптовалюты</h2>
             <!-- Не забудьте указать верный action-атрибут -->
-            <form class="modal-sell" method="post" autocomplete="off">
+            <form class="modal-sell modal-form" method="post" autocomplete="off">
               <!--
                   Обратите внимание, что всем полям для отправки на сервер нужно указать
                   атрибуты name (их список вы найдёте в техзадании), а часть полей

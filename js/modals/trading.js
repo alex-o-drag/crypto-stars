@@ -1,15 +1,26 @@
 import {getAccountInfo} from '../api/api.js';
 
+const currenciesInputBinding = (rubInput, keksInput, rate) => {
+  [rubInput, keksInput].forEach((input) => {
+    input.addEventListener('keyup', () => {
+      let newValue;
+      let anotherInput;
+      if(input === rubInput) {
+        newValue = (+rubInput.value / +rate);
+        anotherInput = keksInput;
+      } else {
+        newValue = (+keksInput.value * +rate);
+        anotherInput = rubInput;
+      }
+      anotherInput.value = newValue;
+    });
+  });
+};
+
 const setModalInfo = (user, modal, profile, callback) => {
   getAccountInfo(() => {
-
-    modal.querySelector('[data-name]').textContent = user.userName;
-    modal.querySelector('[data-exchangerate]').textContent = user.exchangeRate;
-    modal.querySelector('[data-cashlimit]').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${user.exchangeRate * user.balance.amount}\xA0₽`;
-    if(!user.isVerified) {
-      modal.querySelector('[data-isverified]').remove();
-    }
-
+    const rubInput = modal.querySelector('[data-rubinput]');
+    const keksInput = modal.querySelector('[data-keksinput]');
     const paymentMethodSelect = modal.querySelector('[data-paymentmetods]');
     let paymentMethods;
     const walletInput = modal.querySelector('[data-wallet]');
@@ -17,12 +28,17 @@ const setModalInfo = (user, modal, profile, callback) => {
     let sendingCurrency;
     let receivingCurrency;
 
+    modal.querySelector('[data-name]').textContent = user.userName;
+    modal.querySelector('[data-exchangerate]').textContent = user.exchangeRate;
+    modal.querySelector('[data-cashlimit]').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${user.exchangeRate * user.balance.amount}\xA0₽`;
+    if(!user.isVerified) {
+      modal.querySelector('[data-isverified]').remove();
+    }
     if(user.status === 'seller') {
       paymentMethods = user.paymentMethods;
       wallet = profile.wallet.address;
       sendingCurrency = 'RUB';
       receivingCurrency = 'KEKS';
-
     } else {
       paymentMethods = profile.paymentMethods;wallet = user.wallet.address;
       wallet = user.wallet.address;
@@ -47,6 +63,9 @@ const setModalInfo = (user, modal, profile, callback) => {
     modal.querySelector('[data-exchangerateinput]').setAttribute('value', user.exchangeRate);
     modal.querySelector('[data-sendingcurrency]').setAttribute('value', sendingCurrency );
     modal.querySelector('[data-receivingcurrency]').setAttribute('value', receivingCurrency);
+
+
+    currenciesInputBinding(rubInput, keksInput, user.exchangeRate);
     callback();
   });
 };

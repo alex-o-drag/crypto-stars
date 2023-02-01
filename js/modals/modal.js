@@ -1,6 +1,7 @@
 import {isEscape} from '../common/utils.js';
 import {setModalInfo} from './trading.js';
 import {getAccountInfo} from '../api/api.js';
+import {initValidation} from '../forms/validation.js';
 
 const modalBuy = document.querySelector('#modal-buy').content.querySelector('.modal');
 const modalSell = document.querySelector('#modal-sell').content.querySelector('.modal');
@@ -28,12 +29,14 @@ const showModal = (user) => {
   const currentModal = user.status === 'seller' ? modalBuy.cloneNode(true) : modalSell.cloneNode(true);
   const closeModalBtn = currentModal.querySelector('.close-btn');
   const closeModalOverlay = currentModal.querySelector('.modal__overlay');
+  const form = currentModal.querySelector('.modal-form');
 
   closeModalBtn.addEventListener('click', onModalElementClick);
   closeModalOverlay.addEventListener('click', onModalElementClick);
   document.addEventListener('keydown', onEscKeydown);
   getAccountInfo((profile) => {
     setModalInfo(user, currentModal, profile, () => {
+      initValidation(form);
       body.classList.add('scroll-lock');
       body.appendChild(currentModal);
     });

@@ -382,8 +382,9 @@
                 </div>
                 <div class="modal__input-wrapper modal__input-wrapper--decorated">
                   <div class="custom-input">
-                    <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
-                      <input type="number" placeholder="08701943851-9832345" disabled>
+                    <label>
+                      <span class="custom-input__label">Номер криптокошелька пользователя</span>
+                      <input data-wallet type="number" placeholder="" disabled>
                     </label>
                   </div>
                 </div>
@@ -459,19 +460,21 @@
                 <p class="transaction-info__item transaction-info__item--name">
                   <span class="transaction-info__label">Пользователь</span>
                   <span class="transaction-info__data">
-                    <svg width="20" height="20" aria-hidden="true">
+                    <svg width="20" height="20" aria-hidden="true" data-isverified>
                       <use xlink:href="#icon-star"></use>
                     </svg>
-                    John Smith
+                    <span data-name>
+                      John Smith
+                    </span>
                   </span>
                 </p>
                 <p class="transaction-info__item transaction-info__item--exchangerate">
                   <span class="transaction-info__label">Курс</span>
-                  <span class="transaction-info__data">9 999 999&nbsp;₽</span>
+                  <span data-exchangerate class="transaction-info__data">9 999 999&nbsp;₽</span>
                 </p>
                 <p class="transaction-info__item transaction-info__item--cashlimit">
                   <span class="transaction-info__label">Лимит</span>
-                  <span class="transaction-info__data">9 999 999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</span>
+                  <span data-cashlimit class="transaction-info__data">9 999 999&nbsp;₽&nbsp;-&nbsp;9 999 999 000&nbsp;₽</span>
                 </p>
               </div>
               <div class="modal__container">
@@ -504,7 +507,7 @@
                 <div class="modal__input-wrapper modal__input-wrapper--decorated">
                   <div class="custom-input">
                     <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
-                      <input type="number" placeholder="08701943851-983457-2345" disabled>
+                      <input data-wallet type="text" placeholder="" disabled>
                     </label>
                   </div>
                 </div>
@@ -517,24 +520,22 @@
                     -->
                     <select data-paymentmetods>
                       <option selected disabled>Выберите платёжную систему</option>
-                      <option>CryptoEx</option>
-                      <option>Первый криптобанк</option>
-                      <option>BitTransfer</option>
-                      <option>BMT Exchange</option>
                     </select>
                   </div>
                 </div>
                 <div class="modal__input-wrapper modal__input-wrapper--decorated">
                   <div class="custom-input">
                     <!-- В случае, если выбрана оплата наличными, поле нужно оставить пустым -->
-                    <label><span class="custom-input__label">Номер банковской карты пользователя</span>
-                      <input type="number" value="" disabled data-bankcardinput>
+                    <label>
+                      <span class="custom-input__label">Номер банковской карты пользователя</span>
+                      <input type="text" placeholder="" data-bankcardinput disabled>
                     </label>
                   </div>
                 </div>
                 <div class="modal__input-wrapper modal__input-wrapper--decorated">
                   <div class="custom-input">
-                    <label><span class="custom-input__label">Платёжный пароль</span>
+                    <label>
+                      <span class="custom-input__label">Платёжный пароль</span>
                       <input type="password" value="" placeholder="Введите пароль">
                     </label>
                   </div>

@@ -3,7 +3,7 @@ import {serverErrorContainer, showServerError} from '../users-info/table.js';
 
 const profile = document.querySelector('.user-profile');
 
-const setUserData = () => {
+const printUserData = () => {
   getAccountInfo((user) => {
     const balanceCrypto = user.balances.find((element) => element.currency === 'KEKS')['amount'];
     const balanceRUB = user.balances.find((element) => element.currency === 'RUB')['amount'];
@@ -18,4 +18,4 @@ const setUserData = () => {
   });
 };
 
-export {setUserData};
+export {printUserData};

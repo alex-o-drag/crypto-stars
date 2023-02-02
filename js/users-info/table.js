@@ -55,14 +55,14 @@ const printUsersOnTable = () => {
         });
       }
       if(user.status === 'seller') {
-        maxAmount = user.exchangeRate * user.balance.amount;
+        maxAmount = (user.exchangeRate * user.balance.amount).toFixed(2);
         if(user.coords) {
           addSellerToMap(user);
         }
       } else {
         maxAmount = user.balance.amount;
       }
-      userToAdd.querySelector('.users-list__table-cashlimit').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${maxAmount}\xA0₽`;
+      userToAdd.querySelector('.users-list__table-cashlimit').textContent = `${maxAmount}\xA0₽`;
 
       userToAdd.querySelector('.users-list__table-btn .btn').addEventListener('click', () => {
         showModal(user);

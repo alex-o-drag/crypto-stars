@@ -6,13 +6,13 @@ const currenciesInputBinding = (rubInput, keksInput, rate) => {
       let newValue;
       let anotherInput;
       if(input === rubInput) {
-        newValue = (+rubInput.value / +rate);
+        newValue = (+rubInput.value / +rate).toFixed(4);
         anotherInput = keksInput;
       } else {
-        newValue = (+keksInput.value * +rate);
+        newValue = (+keksInput.value * +rate).toFixed(4);
         anotherInput = rubInput;
       }
-      anotherInput.value = newValue;
+      anotherInput.value = newValue || '';
     });
   });
 };
@@ -30,7 +30,7 @@ const setModalInfo = (user, modal, profile, callback) => {
 
     modal.querySelector('[data-name]').textContent = user.userName;
     modal.querySelector('[data-exchangerate]').textContent = user.exchangeRate;
-    modal.querySelector('[data-cashlimit]').textContent = `${user.minAmount}\xA0₽\xA0-\xA0${user.exchangeRate * user.balance.amount}\xA0₽`;
+    modal.querySelector('[data-cashlimit]').textContent = `${user.minAmount * user.exchangeRate}\xA0₽\xA0-\xA0${(user.exchangeRate * user.balance.amount).toFixed(2)}\xA0₽`;
     if(!user.isVerified) {
       modal.querySelector('[data-isverified]').remove();
     }
@@ -67,6 +67,8 @@ const setModalInfo = (user, modal, profile, callback) => {
 
     currenciesInputBinding(rubInput, keksInput, user.exchangeRate);
     callback();
+  }, (error) => {
+
   });
 };
 

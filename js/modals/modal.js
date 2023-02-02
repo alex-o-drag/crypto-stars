@@ -1,6 +1,6 @@
 import {isEscape} from '../common/utils.js';
 import {setModalInfo} from './trading.js';
-import {getAccountInfo} from '../api/api.js';
+import {getAccountInfo, makeDeal} from '../api/api.js';
 import {initValidation} from '../forms/validation.js';
 
 const modalBuy = document.querySelector('#modal-buy').content.querySelector('.modal');
@@ -36,7 +36,7 @@ const showModal = (user) => {
   document.addEventListener('keydown', onEscKeydown);
   getAccountInfo((profile) => {
     setModalInfo(user, currentModal, profile, () => {
-      initValidation(form);
+      initValidation(form, makeDeal);
       body.classList.add('scroll-lock');
       body.appendChild(currentModal);
     });

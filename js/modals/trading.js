@@ -2,14 +2,14 @@ import {getAccountInfo} from '../api/api.js';
 
 const currenciesInputBinding = (rubInput, keksInput, rate) => {
   [rubInput, keksInput].forEach((input) => {
-    input.addEventListener('keyup', () => {
+    input.addEventListener('input', () => {
       let newValue;
       let anotherInput;
       if(input === rubInput) {
-        newValue = (+rubInput.value / +rate).toFixed(4);
+        newValue = (+rubInput.value / +rate).toFixed(2);
         anotherInput = keksInput;
       } else {
-        newValue = (+keksInput.value * +rate).toFixed(4);
+        newValue = (+keksInput.value * +rate).toFixed(2);
         anotherInput = rubInput;
       }
       anotherInput.value = newValue || '';
@@ -40,23 +40,24 @@ const setModalInfo = (user, modal, profile, callback) => {
       sendingCurrency = 'RUB';
       receivingCurrency = 'KEKS';
     } else {
-      paymentMethods = profile.paymentMethods;wallet = user.wallet.address;
+      paymentMethods = profile.paymentMethods;
       wallet = user.wallet.address;
       sendingCurrency = 'KEKS';
       receivingCurrency = 'RUB';
     }
 
-    walletInput.setAttribute('placeholder', wallet);
+    walletInput.setAttribute('value', wallet);
 
     paymentMethods.forEach((method) => {
       const newOption = document.createElement('option');
       newOption.textContent = method.provider;
-      newOption.setAttribute('value', method.accountNumber || '');
+      newOption.setAttribute('value', method.provider || '');
       paymentMethodSelect.appendChild(newOption);
     });
 
     paymentMethodSelect.addEventListener('change', (evt) => {
-      modal.querySelector('[data-bankcardinput]').setAttribute('value', evt.target.value);
+      const currentMethod = paymentMethods.find((element) => element.provider === evt.target.value);
+      modal.querySelector('[data-bankcardinput]').setAttribute('value', currentMethod.accountNumber || '');
     });
 
     modal.querySelector('[data-contractorid]').setAttribute('value', user.id);
@@ -64,11 +65,8 @@ const setModalInfo = (user, modal, profile, callback) => {
     modal.querySelector('[data-sendingcurrency]').setAttribute('value', sendingCurrency );
     modal.querySelector('[data-receivingcurrency]').setAttribute('value', receivingCurrency);
 
-
     currenciesInputBinding(rubInput, keksInput, user.exchangeRate);
     callback();
-  }, (error) => {
-
   });
 };
 

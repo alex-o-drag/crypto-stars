@@ -346,6 +346,8 @@
                         data-rubinput
                         required
                         data-pristine-required-message="Необходимо заполнить"
+                        step="0.01"
+                        name="sendingAmount"
                       >
                     </label>
                     <!-- Пример стилизации ошибки валидации -->
@@ -365,6 +367,8 @@
                         data-keksinput
                         required
                         data-pristine-required-message="Необходимо заполнить"
+                        step="0.01"
+                        name="receivingAmount"
                       >
                     </label>
                   </div>
@@ -383,7 +387,7 @@
                         которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                         остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                     -->
-                    <select id="buy-select" data-paymentmetods>
+                    <select id="buy-select" data-paymentmetods name="paymentMethod">
                       <option selected disabled>Выберите платёжную систему</option>
                     </select>
                   </div>
@@ -394,6 +398,7 @@
                     <label>
                       <span class="custom-input__label">Номер банковской карты пользователя</span>
                       <input type="text" placeholder="" data-bankcardinput disabled>
+                      <input type="hidden" data-provider>
                     </label>
                   </div>
                 </div>
@@ -401,14 +406,14 @@
                   <div class="custom-input">
                     <label>
                       <span class="custom-input__label">Номер криптокошелька пользователя</span>
-                      <input data-wallet type="number" placeholder="" disabled>
+                      <input data-wallet type="text" disabled>
                     </label>
                   </div>
                 </div>
                 <div class="modal__input-wrapper modal__input-wrapper--decorated">
                   <div class="custom-input">
                     <label><span class="custom-input__label">Платёжный пароль</span>
-                      <input type="password" value="" placeholder="Введите пароль">
+                      <input type="password" value="" placeholder="Введите пароль" name="paymentPassword">
                     </label>
                   </div>
                 </div>
@@ -426,6 +431,15 @@
       </div>
     </template>
 
+    <template id="submit-message-success">
+      <!-- Сообщение, которое нужно показать в случае успешной отправки данных -->
+      <p class="modal__validation-message modal__validation-message--success">
+        <svg width="20" height="20" aria-hidden="true">
+          <use xlink:href="#icon-success"></use>
+        </svg>
+        Данные успешно отправлены
+      </p>
+    </template>
 
     <template id="submit-message-error">
       <!-- Сообщение, которое нужно показать в случае неудачной отправки данных -->
@@ -434,15 +448,6 @@
           <use xlink:href="#icon-error"></use>
         </svg>
         Ошибка заполнения формы
-      </p>
-    </template>
-    <template id="submit-message-success">
-      <!-- Сообщение, которое нужно показать в случае успешной отправки данных -->
-      <p class="modal__validation-message modal__validation-message--success">
-        <svg width="20" height="20" aria-hidden="true">
-          <use xlink:href="#icon-success"></use>
-        </svg>
-        Данные успешно отправлены
       </p>
     </template>
 
@@ -524,7 +529,7 @@
                 <div class="modal__input-wrapper modal__input-wrapper--decorated">
                   <div class="custom-input">
                     <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
-                      <input data-wallet type="text" placeholder="" disabled>
+                      <input data-wallet type="text" disabled>
                     </label>
                   </div>
                 </div>

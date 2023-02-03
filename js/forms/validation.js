@@ -13,11 +13,7 @@ const showSubmitMessageElement = (form, isSuccess) => {
   output.append(template.cloneNode(true));
 };
 
-const initValidation = (form, onSubmit) => {
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-  });
-
+const initValidation = (form, onSubmit, contractor, user) => {
   const pristine = new Pristine(
     form, {
       classTo: 'custom-input',
@@ -25,6 +21,24 @@ const initValidation = (form, onSubmit) => {
       errorTextClass: 'custom-input__error',
     },
     true);
+
+  const rubInput = form.querySelector('[data-rubinput]');
+  const keksInput = form.querySelector('[data-keksinput]');
+
+  [rubInput, keksInput].forEach((element) => {
+    pristine.addValidator(element, (value) => !isNaN(+value), 'Значение должно быть числом');
+    element.addEventListener('input', () => {
+      if(element === rubInput) {
+        pristine.validate(keksInput);
+        return;
+      }
+      pristine.validate(rubInput);
+    });
+  });
+
+  pristine.addValidator(rubInput, (value) => +value >= contractor.minAmount, 'Значение должно быть больше минимального лимита');
+  pristine.addValidator(rubInput, (value) => +value <= (contractor.exchangeRate * contractor.balance.amount), 'Значение должно быть меньше максимального лимита');
+
 
   form.addEventListener('submit', (evt) => {
     const isValidForm = pristine.validate();
@@ -36,7 +50,6 @@ const initValidation = (form, onSubmit) => {
       return;
     }
 
-    pristine.validate();
     onSubmit(form, () => {
       showSubmitMessageElement(form, true);
     }, () => {

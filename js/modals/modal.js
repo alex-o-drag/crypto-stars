@@ -25,18 +25,17 @@ const onModalElementClick = () => {
   closeModal();
 };
 
-const showModal = (user) => {
-  const currentModal = user.status === 'seller' ? modalBuy.cloneNode(true) : modalSell.cloneNode(true);
+const showModal = (contractor) => {
+  const currentModal = contractor.status === 'seller' ? modalBuy.cloneNode(true) : modalSell.cloneNode(true);
   const closeModalBtn = currentModal.querySelector('.close-btn');
   const closeModalOverlay = currentModal.querySelector('.modal__overlay');
   const form = currentModal.querySelector('.modal-form');
-
   closeModalBtn.addEventListener('click', onModalElementClick);
   closeModalOverlay.addEventListener('click', onModalElementClick);
   document.addEventListener('keydown', onEscKeydown);
-  getAccountInfo((profile) => {
-    setModalInfo(user, currentModal, profile, () => {
-      initValidation(form, makeDeal);
+  getAccountInfo((user) => {
+    setModalInfo(contractor, currentModal, user, () => {
+      initValidation(form, makeDeal, contractor, user);
       body.classList.add('scroll-lock');
       body.appendChild(currentModal);
     });

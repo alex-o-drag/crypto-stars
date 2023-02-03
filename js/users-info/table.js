@@ -60,7 +60,7 @@ const printUsersOnTable = () => {
           addSellerToMap(user);
         }
       } else {
-        maxAmount = user.balance.amount;
+        maxAmount = (user.exchangeRate * user.balance.amount).toFixed(2);
       }
       userToAdd.querySelector('.users-list__table-cashlimit').textContent = `${maxAmount}\xA0₽`;
 

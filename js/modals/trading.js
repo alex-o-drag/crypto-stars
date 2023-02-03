@@ -1,15 +1,19 @@
 import {getAccountInfo} from '../api/api.js';
 
+const convertRubToKeks = (rubs, rate) => (rubs / rate);
+
+const convertKeksToRubs = (keks, rate) => (keks * rate);
+
 const currenciesInputBinding = (rubInput, keksInput, rate) => {
   [rubInput, keksInput].forEach((input) => {
     input.addEventListener('input', () => {
       let newValue;
       let anotherInput;
       if(input === rubInput) {
-        newValue = (+rubInput.value / +rate).toFixed(2);
+        newValue = convertRubToKeks(+rubInput.value, +rate);
         anotherInput = keksInput;
       } else {
-        newValue = (+keksInput.value * +rate).toFixed(2);
+        newValue = convertKeksToRubs(+keksInput.value, +rate);
         anotherInput = rubInput;
       }
       anotherInput.value = newValue || '';
@@ -17,31 +21,40 @@ const currenciesInputBinding = (rubInput, keksInput, rate) => {
   });
 };
 
-const setModalInfo = (user, modal, profile, callback) => {
+const setModalInfo = (contractor, modal, user, callback) => {
   getAccountInfo(() => {
     const rubInput = modal.querySelector('[data-rubinput]');
     const keksInput = modal.querySelector('[data-keksinput]');
     const paymentMethodSelect = modal.querySelector('[data-paymentmetods]');
-    let paymentMethods;
     const walletInput = modal.querySelector('[data-wallet]');
+    const changeAllButton = modal.querySelector('.change-all-button');
+    let paymentMethods;
     let wallet;
     let sendingCurrency;
     let receivingCurrency;
 
-    modal.querySelector('[data-name]').textContent = user.userName;
-    modal.querySelector('[data-exchangerate]').textContent = user.exchangeRate;
-    modal.querySelector('[data-cashlimit]').textContent = `${user.minAmount * user.exchangeRate}\xA0₽\xA0-\xA0${(user.exchangeRate * user.balance.amount).toFixed(2)}\xA0₽`;
-    if(!user.isVerified) {
+    const changeAll = () => {
+      //console.log(contractor.balance.amount * contractor.exchangeRate);
+      modal.querySelector('[data-keksinput]').value = contractor.balance.amount;
+      modal.querySelector('[data-rubinput]').value = convertKeksToRubs(+contractor.balance.amount, contractor.exchangeRate);
+    };
+
+    changeAllButton.addEventListener('click', changeAll);
+
+    modal.querySelector('[data-name]').textContent = contractor.userName;
+    modal.querySelector('[data-exchangerate]').textContent = contractor.exchangeRate;
+    modal.querySelector('[data-cashlimit]').textContent = `${contractor.minAmount}\xA0₽\xA0-\xA0${(contractor.exchangeRate * contractor.balance.amount)}\xA0₽`;
+    if(!contractor.isVerified) {
       modal.querySelector('[data-isverified]').remove();
     }
-    if(user.status === 'seller') {
-      paymentMethods = user.paymentMethods;
-      wallet = profile.wallet.address;
+    if(contractor.status === 'seller') {
+      paymentMethods = contractor.paymentMethods;
+      wallet = user.wallet.address;
       sendingCurrency = 'RUB';
       receivingCurrency = 'KEKS';
     } else {
-      paymentMethods = profile.paymentMethods;
-      wallet = user.wallet.address;
+      paymentMethods = user.paymentMethods;
+      wallet = contractor.wallet.address;
       sendingCurrency = 'KEKS';
       receivingCurrency = 'RUB';
     }
@@ -60,12 +73,13 @@ const setModalInfo = (user, modal, profile, callback) => {
       modal.querySelector('[data-bankcardinput]').setAttribute('value', currentMethod.accountNumber || '');
     });
 
-    modal.querySelector('[data-contractorid]').setAttribute('value', user.id);
-    modal.querySelector('[data-exchangerateinput]').setAttribute('value', user.exchangeRate);
+    modal.querySelector('[data-contractorid]').setAttribute('value', contractor.id);
+    modal.querySelector('[data-exchangerateinput]').setAttribute('value', contractor.exchangeRate);
     modal.querySelector('[data-sendingcurrency]').setAttribute('value', sendingCurrency );
     modal.querySelector('[data-receivingcurrency]').setAttribute('value', receivingCurrency);
 
-    currenciesInputBinding(rubInput, keksInput, user.exchangeRate);
+    currenciesInputBinding(rubInput, keksInput, contractor.exchangeRate);
+
     callback();
   });
 };

@@ -24,6 +24,8 @@ const initValidation = (form, onSubmit, contractor, user) => {
 
   const rubInput = form.querySelector('[data-rubinput]');
   const keksInput = form.querySelector('[data-keksinput]');
+  const cardInput = form.querySelector('[data-bankcardinput]');
+  const paymentSelect = form.querySelector('[data-paymentmetods]');
 
   [rubInput, keksInput].forEach((element) => {
     pristine.addValidator(element, (value) => !isNaN(+value), 'Значение должно быть числом');
@@ -38,7 +40,8 @@ const initValidation = (form, onSubmit, contractor, user) => {
 
   pristine.addValidator(rubInput, (value) => +value >= contractor.minAmount, 'Значение должно быть больше минимального лимита');
   pristine.addValidator(rubInput, (value) => +value <= (contractor.exchangeRate * contractor.balance.amount), 'Значение должно быть меньше максимального лимита');
-
+  pristine.addValidator(cardInput, () => paymentSelect.value !== '', 'Для заполнения поля необходимо выбрать платёжную систему');
+  pristine.addValidator(rubInput, (value) => +value <= user.balances.find((element) => element.currency === 'RUB').amount, 'Указанная сумма больше средств у вас на счету');
 
   form.addEventListener('submit', (evt) => {
     const isValidForm = pristine.validate();
@@ -55,6 +58,10 @@ const initValidation = (form, onSubmit, contractor, user) => {
     }, () => {
       showSubmitMessageElement(form, false);
     });
+  });
+
+  paymentSelect.addEventListener('change', () => {
+    pristine.validate(cardInput);
   });
 };
 

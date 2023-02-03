@@ -81,6 +81,8 @@ const setModalInfo = (contractor, modal, user, callback) => {
     currenciesInputBinding(rubInput, keksInput, contractor.exchangeRate);
 
     callback();
+  }, (error) => {
+    console.error(error);
   });
 };
 

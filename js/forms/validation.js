@@ -45,7 +45,14 @@ const initValidation = (form, onSubmit, contractor, user) => {
   pristine.addValidator(rubInput, (value) => +value >= contractor.minAmount, 'Значение должно быть больше минимального лимита');
   pristine.addValidator(rubInput, (value) => +value <= (contractor.exchangeRate * contractor.balance.amount), 'Значение должно быть меньше максимального лимита');
   pristine.addValidator(cardInput, () => paymentSelect.value !== '', 'Для заполнения поля необходимо выбрать платёжную систему');
-  pristine.addValidator(rubInput, (value) => +value <= user.balances.find((element) => element.currency === 'RUB').amount, 'Указанная сумма больше средств у вас на счету');
+
+  if(contractor.status === 'buyer') {
+    pristine.addValidator(keksInput, (value) => +value <= user.balances.find((element) => element.currency === 'KEKS').amount, 'У вас на счету нет такого количества КЕКСов');
+    pristine.addValidator(rubInput, (value) => +value <= contractor.balance['RUB'], 'Такой суммы нет у пользователя нет');
+  } else {
+    pristine.addValidator(rubInput, (value) => +value <= user.balances.find((element) => element.currency === 'RUB').amount, 'Указанная сумма больше средств чем у вас на счету');
+  }
+
   pristine.addValidator(passwordInput, (value) => +value === DEFAULT_PASSWORD, 'Неверный пароль');
   paymentSelect.addEventListener('change', () => {
     pristine.validate(cardInput);

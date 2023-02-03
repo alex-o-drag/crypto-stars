@@ -317,7 +317,9 @@
                 <p class="transaction-info__item transaction-info__item--name">
                   <span class="transaction-info__label">Пользователь</span>
                   <span class="transaction-info__data">
-                    <svg data-isverified width="20" height="20" aria-hidden="true"><use xlink:href="#icon-star"></use></svg>
+                    <svg width="20" height="20" aria-hidden="true" data-isverified>
+                     <use xlink:href="#icon-star"></use>
+                    </svg>
                     <span data-name>
                       John Smith
                     </span>
@@ -510,12 +512,18 @@
                   <div class="custom-input">
                     <label>
                       <span class="custom-input__label">Оплата</span>
-                      <span class="custom-input__unit">KEKS</span>
-                      <button class="btn btn--textblue custom-input__btn" type="button">обменять
-                        все</button>
-                      <input type="number" value="" placeholder="0">
+                      <span class="custom-input__unit">₽</span>
+                      <button class="btn btn--textblue custom-input__btn change-all-button" type="button">обменять все</button>
+                      <input
+                        type="text"
+                        value=""
+                        placeholder="0"
+                        data-rubinput
+                        required
+                        data-pristine-required-message="Необходимо заполнить"
+                        name="receivingAmount"
+                      >
                     </label>
-                    <div class="custom-input__error">Минимальная сумма — 9 999 999 ₽</div>
                   </div>
                 </div>
                 <svg class="modal__container-svg" width="14" height="12" aria-hidden="true">
@@ -523,10 +531,17 @@
                 </svg>
                 <div class="modal__input-wrapper modal__input-wrapper--min">
                   <div class="custom-input">
-                    <label><span class="custom-input__label">Зачисление</span><span
-                      class="custom-input__unit">₽</span>
-                      <button class="btn btn--textblue custom-input__btn" type="button">обменять все</button>
-                      <input type="number" value="" placeholder="">
+                    <label>
+                      <span class="custom-input__label">Зачисление</span>
+                      <span class="custom-input__unit">KEKS</span>
+                      <input
+                        type="text"
+                        placeholder="0"
+                        data-keksinput
+                        required
+                        data-pristine-required-message="Необходимо заполнить"
+                        name="sendingAmount"
+                      >
                     </label>
                   </div>
                 </div>
@@ -534,7 +549,8 @@
               <div class="modal__container">
                 <div class="modal__input-wrapper modal__input-wrapper--decorated">
                   <div class="custom-input">
-                    <label><span class="custom-input__label">Номер криптокошелька пользователя</span>
+                    <label>
+                      <span class="custom-input__label">Номер криптокошелька пользователя</span>
                       <input data-wallet type="text" disabled>
                     </label>
                   </div>
@@ -551,7 +567,7 @@
                         которые есть у пользователя. Способ - удалить из разметки или добавить disable-атрибут
                         остаётся на ваше усмотрение. Первый пункт, с предложением выбора, должен быть всегда
                     -->
-                    <select id="sell-select" data-paymentmetods>
+                    <select id="sell-select" data-paymentmetods name="paymentMethod">
                       <option selected disabled>Выберите платёжную систему</option>
                     </select>
                   </div>
@@ -569,7 +585,15 @@
                   <div class="custom-input">
                     <label>
                       <span class="custom-input__label">Платёжный пароль</span>
-                      <input type="password" value="" placeholder="Введите пароль">
+                      <input
+                        type="password"
+                        value="180712"
+                        placeholder="Введите пароль"
+                        name="paymentPassword"
+                        data-password-input
+                        required
+                        data-pristine-required-message="Укажите ваш пароль"
+                      >
                     </label>
                   </div>
                 </div>

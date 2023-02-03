@@ -39,6 +39,8 @@ const showModal = (contractor) => {
       body.classList.add('scroll-lock');
       body.appendChild(currentModal);
     });
+  }, (error) => {
+    console.error(error);
   });
 };
 

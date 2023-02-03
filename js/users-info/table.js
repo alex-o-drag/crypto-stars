@@ -55,12 +55,12 @@ const printUsersOnTable = () => {
         });
       }
       if(user.status === 'seller') {
-        maxAmount = (user.exchangeRate * user.balance.amount).toFixed(2);
+        maxAmount = user.exchangeRate * user.balance.amount;
         if(user.coords) {
           addSellerToMap(user);
         }
       } else {
-        maxAmount = (user.exchangeRate * user.balance.amount).toFixed(2);
+        maxAmount = user.balance.amount;
       }
       userToAdd.querySelector('.users-list__table-cashlimit').textContent = `${maxAmount}\xA0₽`;
 

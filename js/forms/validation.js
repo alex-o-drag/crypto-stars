@@ -1,8 +1,11 @@
+import {DEFAULT_PASSWORD} from '../common/params.js';
+
 const successMessage = document.querySelector('#submit-message-success').content.querySelector('.modal__validation-message');
 const errorMessage = document.querySelector('#submit-message-error').content.querySelector('.modal__validation-message');
 
 const showSubmitMessageElement = (form, isSuccess) => {
   const output = form.querySelector('.submit-message');
+  output.style.width = '100%';
   output.innerHTML = '';
   let template;
   if(isSuccess) {
@@ -26,6 +29,7 @@ const initValidation = (form, onSubmit, contractor, user) => {
   const keksInput = form.querySelector('[data-keksinput]');
   const cardInput = form.querySelector('[data-bankcardinput]');
   const paymentSelect = form.querySelector('[data-paymentmetods]');
+  const passwordInput = form.querySelector('[data-password-input]');
 
   [rubInput, keksInput].forEach((element) => {
     pristine.addValidator(element, (value) => !isNaN(+value), 'Значение должно быть числом');
@@ -42,6 +46,10 @@ const initValidation = (form, onSubmit, contractor, user) => {
   pristine.addValidator(rubInput, (value) => +value <= (contractor.exchangeRate * contractor.balance.amount), 'Значение должно быть меньше максимального лимита');
   pristine.addValidator(cardInput, () => paymentSelect.value !== '', 'Для заполнения поля необходимо выбрать платёжную систему');
   pristine.addValidator(rubInput, (value) => +value <= user.balances.find((element) => element.currency === 'RUB').amount, 'Указанная сумма больше средств у вас на счету');
+  pristine.addValidator(passwordInput, (value) => +value === DEFAULT_PASSWORD, 'Неверный пароль');
+  paymentSelect.addEventListener('change', () => {
+    pristine.validate(cardInput);
+  });
 
   form.addEventListener('submit', (evt) => {
     const isValidForm = pristine.validate();
@@ -59,11 +67,9 @@ const initValidation = (form, onSubmit, contractor, user) => {
       showSubmitMessageElement(form, false);
     });
   });
-
-  paymentSelect.addEventListener('change', () => {
-    pristine.validate(cardInput);
-  });
 };
 
 export {initValidation};
 
+
+//0	Object { fieldName: "paymentPassword", fieldValue: 0, errorMessage: "should be a correct payment password" }

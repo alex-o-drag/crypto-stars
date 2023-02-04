@@ -34,9 +34,30 @@ const setModalInfo = (contractor, modal, user, callback) => {
     let receivingCurrency;
 
     const changeAll = () => {
-      //console.log(contractor.balance.amount * contractor.exchangeRate);
-      modal.querySelector('[data-keksinput]').value = contractor.balance.amount;
-      modal.querySelector('[data-rubinput]').value = convertKeksToRubs(+contractor.balance.amount, contractor.exchangeRate);
+      if(contractor.status === 'seller') {
+        const userRubs = user.balances.find((element) => element.currency === 'RUB').amount;
+        const contractorKeks = contractor.balance.amount;
+
+        if(userRubs >= convertKeksToRubs(contractorKeks, contractor.exchangeRate)) {
+          modal.querySelector('[data-keksinput]').value = contractorKeks;
+          modal.querySelector('[data-rubinput]').value = convertKeksToRubs(contractorKeks, contractor.exchangeRate);
+          return;
+        }
+        modal.querySelector('[data-rubinput]').value = userRubs;
+        modal.querySelector('[data-keksinput]').value = convertRubToKeks(userRubs, contractor.exchangeRate);
+        return;
+      }
+
+      const contractorRubs = contractor.balance.amount;
+      const userKeks = user.balances.find((element) => element.currency === 'KEKS')['amount'];
+
+      if(contractorRubs >= convertKeksToRubs(userKeks, contractor.exchangeRate) ) {
+        modal.querySelector('[data-keksinput]').value = userKeks;
+        modal.querySelector('[data-rubinput]').value = convertKeksToRubs(userKeks, contractor.exchangeRate);
+        return;
+      }
+      modal.querySelector('[data-rubinput]').value = contractorRubs;
+      modal.querySelector('[data-keksinput]').value = convertRubToKeks(contractorRubs, contractor.exchangeRate);
     };
 
     changeAllButton.addEventListener('click', changeAll);
@@ -81,8 +102,6 @@ const setModalInfo = (contractor, modal, user, callback) => {
     currenciesInputBinding(rubInput, keksInput, contractor.exchangeRate);
 
     callback();
-  }, (error) => {
-    console.error(error);
   });
 };
 

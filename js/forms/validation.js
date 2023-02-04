@@ -77,6 +77,3 @@ const initValidation = (form, onSubmit, contractor, user) => {
 };
 
 export {initValidation};
-
-
-//0	Object { fieldName: "paymentPassword", fieldValue: 0, errorMessage: "should be a correct payment password" }

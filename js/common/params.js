@@ -5,7 +5,7 @@ const DEFAULT_COORDINATES = {
   lng: 30.31127
 };
 
-const DEFAULT_ZOOM = 17;
+const DEFAULT_ZOOM = 9;
 
 const DEFAULT_PASSWORD = 180712;
 

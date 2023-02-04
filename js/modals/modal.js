@@ -6,11 +6,13 @@ import {initValidation} from '../forms/validation.js';
 const modalBuy = document.querySelector('#modal-buy').content.querySelector('.modal');
 const modalSell = document.querySelector('#modal-sell').content.querySelector('.modal');
 const body = document.querySelector('body');
+const map = document.querySelector('#map');
 
 const closeModal = () => {
   const modal = document.querySelector('.modal');
   body.classList.remove('scroll-lock');
   modal.remove();
+  map.style.zIndex = 'auto';
 };
 
 const onEscKeydown = (evt) => {
@@ -33,14 +35,13 @@ const showModal = (contractor) => {
   closeModalBtn.addEventListener('click', onModalElementClick);
   closeModalOverlay.addEventListener('click', onModalElementClick);
   document.addEventListener('keydown', onEscKeydown);
+  map.style.zIndex = '2';
   getAccountInfo((user) => {
     setModalInfo(contractor, currentModal, user, () => {
       initValidation(form, makeDeal, contractor, user);
       body.classList.add('scroll-lock');
       body.appendChild(currentModal);
     });
-  }, (error) => {
-    console.error(error);
   });
 };
 

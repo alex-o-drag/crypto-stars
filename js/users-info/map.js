@@ -1,4 +1,5 @@
 import {DEFAULT_COORDINATES, DEFAULT_ZOOM} from '../common/params.js';
+import {showModal} from '../modals/modal.js';
 
 const mapAndFilters = L.map('map');
 const popupTemplate = document.querySelector('#map-baloon__template').content.querySelector('.user-card');
@@ -33,6 +34,11 @@ const createBalloonContent = (user) => {
       popup.querySelector('.user-card__badges-list').appendChild(paymentMethod);
     });
   }
+
+  popup.querySelector('.user-card__change-btn').addEventListener('click', () => {
+    showModal(user);
+  });
+
   return popup;
 };
 
